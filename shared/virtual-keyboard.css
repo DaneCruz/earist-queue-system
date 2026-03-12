@@ -1,0 +1,85 @@
+.vk-hidden {
+  display: none !important;
+}
+
+.virtual-keyboard {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: min(920px, calc(100vw - 12px));
+  background: rgba(14, 24, 38, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  max-height: 44vh;
+  overflow-y: auto;
+}
+
+.vk-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.vk-row:first-child {
+  margin-top: 0;
+}
+
+.vk-key {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 34px;
+  min-width: 46px;
+  padding: 0 6px;
+  cursor: pointer;
+}
+
+.vk-key:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.vk-key:active {
+  transform: translateY(1px);
+}
+
+.vk-key.wide {
+  min-width: 76px;
+}
+
+.vk-key.extra-wide {
+  min-width: 132px;
+}
+
+.vk-key.active {
+  background: #1d6ad8;
+  border-color: #5ca3ff;
+}
+
+body.vk-open {
+  padding-bottom: min(46vh, 340px) !important;
+}
+
+@media (max-width: 1100px) {
+  .vk-key {
+    min-width: 38px;
+    font-size: 13px;
+    min-height: 32px;
+  }
+
+  .vk-key.wide {
+    min-width: 64px;
+  }
+
+  .vk-key.extra-wide {
+    min-width: 116px;
+  }
+}

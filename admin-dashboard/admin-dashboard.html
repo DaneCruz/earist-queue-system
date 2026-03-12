@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-dashboard.css">
+  <link rel="stylesheet" href="../shared/virtual-keyboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+  <main class="admin-shell">
+    <header class="top-bar">
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p id="admin-email" class="muted-text">Loading session...</p>
+      </div>
+      <div class="top-actions">
+        <button id="refresh-btn" class="btn neutral" type="button">Refresh</button>
+        <button id="logout-btn" class="btn danger" type="button">Logout</button>
+      </div>
+    </header>
+
+    <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+
+    <section class="panel overview-panel">
+      <div class="overview-cards">
+        <article class="overview-card">
+          <p class="overview-label">Waiting Today</p>
+          <p id="waiting-today-count" class="overview-value">0</p>
+        </article>
+        <article class="overview-card">
+          <p class="overview-label">Interviewing Now</p>
+          <p id="interviewing-count" class="overview-value">0</p>
+        </article>
+        <article class="overview-card">
+          <p class="overview-label">Completed Today</p>
+          <p id="completed-today-count" class="overview-value">0</p>
+        </article>
+        <article class="overview-card">
+          <p class="overview-label">Avg Wait (Today)</p>
+          <p id="avg-wait-today" class="overview-value">--</p>
+        </article>
+        <article class="overview-card">
+          <p class="overview-label">No-show Rate (Today)</p>
+          <p id="no-show-rate-today" class="overview-value">0%</p>
+        </article>
+        <article class="overview-card">
+          <p class="overview-label">Top Concerns (Today)</p>
+          <p id="top-concerns-today" class="overview-small">No data yet.</p>
+        </article>
+      </div>
+      <div class="faculty-load-wrap">
+        <h2>Faculty Queue Load (Today)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Faculty</th>
+              <th>Waiting</th>
+              <th>Interviewing</th>
+              <th>Total Active</th>
+            </tr>
+          </thead>
+          <tbody id="faculty-load-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="panel-grid">
+      <section class="panel">
+        <h2>Faculty Members</h2>
+        <form id="faculty-form" class="form-grid">
+          <input type="hidden" id="faculty-id">
+          <input type="text" id="faculty-name" placeholder="Full Name" required>
+          <input type="email" id="faculty-email-input" placeholder="Gmail" required>
+          <select id="faculty-department-id">
+            <option value="">Select Department (optional)</option>
+            <option value="0c925fe7-dc8a-4be9-a192-7dad34c509f6">BS Computer Engineering</option>
+            <option value="1e868ef2-823d-454f-99d0-239b3f25994e">Other Existing Department</option>
+          </select>
+          <button id="faculty-save-btn" class="btn primary" type="submit">Save Faculty</button>
+          <button id="faculty-reset-btn" class="btn neutral" type="button">Clear</button>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="faculty-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Students</h2>
+        <form id="student-form" class="form-grid">
+          <input type="hidden" id="student-id">
+          <input type="text" id="student-number" placeholder="Student Number" required>
+          <input type="email" id="student-email" placeholder="Student Email" required>
+          <input type="text" id="student-phone" placeholder="Phone Number" required>
+          <input type="text" id="student-name" placeholder="Full Name (optional)">
+          <button id="student-save-btn" class="btn primary" type="submit">Save Student</button>
+          <button id="student-reset-btn" class="btn neutral" type="button">Clear</button>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Student #</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="students-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel history-panel">
+      <div class="history-header">
+        <h2>Consultation History</h2>
+        <div class="history-actions">
+          <label for="consultation-history-filter">Range:</label>
+          <select id="consultation-history-filter">
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="all">All</option>
+          </select>
+          <label for="consultation-faculty-filter">Faculty:</label>
+          <select id="consultation-faculty-filter">
+            <option value="all">All</option>
+          </select>
+          <label for="consultation-status-filter">Status:</label>
+          <select id="consultation-status-filter">
+            <option value="all">All</option>
+            <option value="pending">pending</option>
+            <option value="interviewing">interviewing</option>
+            <option value="completed">completed</option>
+            <option value="no_show">no_show</option>
+            <option value="cancelled">cancelled</option>
+          </select>
+          <label for="consultation-date-from">From:</label>
+          <input id="consultation-date-from" type="date">
+          <label for="consultation-date-to">To:</label>
+          <input id="consultation-date-to" type="date">
+          <button id="export-consultations-csv-btn" class="btn neutral small" type="button">Export CSV</button>
+          <button id="export-consultations-pdf-btn" class="btn neutral small" type="button">Export PDF</button>
+        </div>
+      </div>
+      <p id="consultations-meta" class="muted-text">Loading consultations...</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Queue Date</th>
+              <th>Student #</th>
+              <th>Faculty</th>
+              <th>Concern</th>
+              <th>Preferred Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="consultations-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel history-panel">
+      <div class="history-header">
+        <h2>Activity Logs</h2>
+        <div class="history-actions">
+          <label for="activity-role-filter">Role:</label>
+          <select id="activity-role-filter">
+            <option value="all">All</option>
+            <option value="admin">Admin</option>
+            <option value="faculty">Faculty</option>
+            <option value="student">Student</option>
+            <option value="system">System</option>
+          </select>
+          <input id="activity-search" type="text" placeholder="Search actor/action/target">
+        </div>
+      </div>
+      <p id="activity-meta" class="muted-text">Loading activity logs...</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Actor</th>
+              <th>Role</th>
+              <th>Action</th>
+              <th>Target</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="activity-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="admin-dashboard.js"></script>
+  <script src="../shared/virtual-keyboard.js"></script>
+</body>
+
+</html>

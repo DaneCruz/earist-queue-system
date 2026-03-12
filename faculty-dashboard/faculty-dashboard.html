@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Dashboard</title>
+  <link rel="stylesheet" href="faculty-dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+  <main class="dashboard-shell">
+    <header class="dashboard-header">
+      <div>
+        <h1>Faculty Dashboard</h1>
+        <p id="faculty-email" class="muted-text">Loading profile...</p>
+        <p id="faculty-name" class="muted-text"></p>
+      </div>
+      <div class="header-actions">
+        <select id="faculty-availability-select" class="availability-select" aria-label="Availability status">
+          <option value="available">Available</option>
+          <option value="busy">Busy</option>
+          <option value="offline">Offline</option>
+        </select>
+        <button id="next-student-btn" type="button" class="primary-btn">Next Student</button>
+        <button id="refresh-queue-btn" type="button" class="neutral-btn">Refresh</button>
+        <button id="faculty-logout-btn" type="button">Logout</button>
+      </div>
+    </header>
+
+    <section class="dashboard-content">
+      <div class="availability-window-card">
+        <h2>My Availability Window</h2>
+        <p class="muted-text">Set your consultation time window (max 3 hours per day).</p>
+        <div class="availability-window-grid">
+          <label for="availability-start">Start</label>
+          <input id="availability-start" type="time" step="900">
+          <label for="availability-end">End</label>
+          <input id="availability-end" type="time" step="900">
+          <button id="save-availability-window-btn" type="button" class="neutral-btn">Save Time Window</button>
+        </div>
+      </div>
+
+      <h2>My Consultation Queue</h2>
+      <div class="queue-toolbar">
+        <label for="history-filter" class="toolbar-label">History:</label>
+        <select id="history-filter" class="history-filter" aria-label="Consultation history filter">
+          <option value="today" selected>Today</option>
+          <option value="week">This Week</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+      <p id="queue-meta" class="muted-text">Loading queue...</p>
+      <p id="faculty-status" class="status-text" role="status" aria-live="polite"></p>
+      <div id="queue-list" class="queue-list"></div>
+    </section>
+  </main>
+  <script src="faculty-dashboard.js"></script>
+</body>
+
+</html>

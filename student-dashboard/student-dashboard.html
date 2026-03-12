@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1 id="student-welcome">Welcome, Student</h1>
+      <button id="logout-btn" class="logout-btn" type="button">Logout</button>
+    </div>
+
+    <!-- Student Profile Card -->
+    <div class="student-profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profile-avatar">S</div>
+        <div class="profile-info">
+          <h2 id="profile-name">Loading...</h2>
+          <p id="profile-id" class="profile-id">ID: --</p>
+          <p id="profile-department" class="profile-department">Department: --</p>
+        </div>
+        <div class="profile-stats">
+          <div class="stat-item">
+            <span class="stat-label">Completed</span>
+            <span class="stat-value" id="stat-completed">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Avg. Wait</span>
+            <span class="stat-value" id="stat-avg-wait">--</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-queue-panel">
+      <h2>My Queue Today</h2>
+      <p id="queue-live-banner" class="queue-live-banner" hidden></p>
+      <div id="my-queue-list" class="my-queue-list">
+        <p class="muted-text">Loading your queue...</p>
+      </div>
+    </div>
+
+    <div class="faculty-availability">
+      <div class="section-head">
+        <h2>Faculty Availability</h2>
+        <button id="refresh-eta-btn" class="refresh-eta-btn" type="button">Refresh ETA</button>
+      </div>
+      <div id="faculty-grid" class="faculty-grid"></div>
+    </div>
+
+    <p id="message-section" class="message-section"></p>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

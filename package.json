@@ -1,0 +1,26 @@
+{
+  "name": "earist-queue-system",
+  "version": "1.0.0",
+  "description": "EARIST Queue Management System - Mobile-responsive consultation booking platform",
+  "private": true,
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "deploy:functions": "supabase functions deploy send-queue-email && supabase functions deploy start-interview",
+    "db:pull": "supabase db pull --project-ref yhryfoimpqzmaaymsaat",
+    "db:push": "supabase db push --project-ref yhryfoimpqzmaaymsaat"
+  },
+  "keywords": [
+    "queue-management",
+    "consultation",
+    "supabase",
+    "mobile-responsive"
+  ],
+  "author": "EARIST",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/earist-queue-system.git"
+  },
+  "devDependencies": {
+    "supabase": "^1.244.0"
+  }
+}

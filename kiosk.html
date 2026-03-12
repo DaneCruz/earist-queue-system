@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiosk Login</title>
+  <link rel="stylesheet" href="kiosk.css">
+  <link rel="stylesheet" href="shared/virtual-keyboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+  <main class="kiosk-card">
+    <h1>Student Kiosk</h1>
+    <p class="subtitle">Scan barcode or use student number.</p>
+
+    <div class="mode-buttons">
+      <button id="barcode-mode-btn" type="button">Login with Barcode</button>
+      <button id="manual-mode-btn" type="button">Login with Student Number</button>
+    </div>
+
+    <section id="barcode-section" class="mode-section hidden">
+      <h2>Scan your ID Barcode</h2>
+      <input type="text" id="barcode-scan-input" placeholder="Click here then scan barcode">
+      <button id="barcode-login-btn" type="button">Login using Scanned Barcode</button>
+      <p class="hint">Use your USB barcode scanner. It should auto-type the student number.</p>
+    </section>
+
+    <section id="manual-section" class="mode-section hidden">
+      <h2>Enter your Student Number</h2>
+      <input type="text" id="student-number" placeholder="e.g. 222-11156M">
+      <button id="student-login-btn" type="button">Login</button>
+    </section>
+
+    <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+    <a class="back-link" href="index.html">Back to Home</a>
+  </main>
+
+  <script src="kiosk.js"></script>
+  <script src="shared/virtual-keyboard.js"></script>
+</body>
+
+</html>

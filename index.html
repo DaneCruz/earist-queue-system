@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Queue System</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="shared/virtual-keyboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+  <main class="landing-card">
+    <h1>Campus Queue System</h1>
+    <p class="subtitle">Hybrid queue management for student consultations.</p>
+
+    <div class="actions">
+      <a class="btn btn-kiosk" href="kiosk.html">Open Kiosk Mode</a>
+      <button id="faculty-btn" class="btn btn-faculty" type="button">Faculty Dashboard</button>
+      <button id="admin-btn" class="btn btn-admin" type="button">Admin Dashboard</button>
+    </div>
+
+    <div class="content-grid">
+      <section class="quick-login">
+        <h2>Quick Login (Google)</h2>
+        <input type="email" id="faculty-email" placeholder="Enter Faculty Gmail" />
+        <input type="email" id="admin-email" placeholder="Enter Admin Gmail" />
+        <button id="continue-faculty-btn" class="btn btn-alt hidden" type="button"></button>
+        <button id="continue-admin-btn" class="btn btn-alt hidden" type="button"></button>
+      </section>
+
+      <section class="faculty-status-board" aria-labelledby="faculty-status-title">
+        <h2 id="faculty-status-title">Faculty Status Today</h2>
+        <p id="faculty-status-meta" class="muted-meta">Loading faculty status...</p>
+        <div id="faculty-status-list" class="faculty-status-list"></div>
+      </section>
+    </div>
+
+    <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+  </main>
+
+  <script src="scripts.js"></script>
+  <script src="shared/virtual-keyboard.js"></script>
+</body>
+
+</html>
