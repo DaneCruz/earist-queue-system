@@ -1044,11 +1044,53 @@ function startRealtimeSubscriptions() {
         schema: 'public',
         table: CONSULTATIONS_TABLE,
       },
-      () => {
+      (payload) => {
+        // Check if it's student's turn
+        checkAndNotifyStudentTurn(payload);
         scheduleFacultyReload();
       }
     )
     .subscribe();
+}
+
+async function checkAndNotifyStudentTurn(payload) {
+  if (!supabaseClient) return;
+
+  try {
+    const session = await supabaseClient.auth.getSession();
+    const studentEmail = session.data?.session?.user?.email;
+    if (!studentEmail) return;
+
+    const { data: student } = await supabaseClient
+      .from('students')
+      .select('id')
+      .eq('email', studentEmail)
+      .single();
+
+    if (!student) return;
+
+    // Get the updated consultation
+    const { data: consultation } = await supabaseClient
+      .from(CONSULTATIONS_TABLE)
+      .select('*, faculty!inner(full_name, name)')
+      .eq('student_id', student.id)
+      .eq('status', 'interviewing')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (consultation) {
+      const facultyName = consultation.faculty?.full_name || consultation.faculty?.name || 'Faculty';
+      notificationManager.show(
+        '🎯 Your Turn!',
+        `Go to ${facultyName} now for your consultation!`,
+        'success',
+        8000
+      );
+    }
+  } catch (error) {
+    console.log('Notification check completed');
+  }
 }
 
 function scheduleFacultyReload() {

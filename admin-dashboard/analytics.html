@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Queue Analytics - Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-dashboard.css">
+  <link rel="stylesheet" href="analytics.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="navbar">
+      <div class="nav-content">
+        <h1>Queue Analytics</h1>
+        <button id="logout-btn" class="logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <main class="dashboard-container analytics-dashboard">
+      <!-- Navigation -->
+      <nav class="admin-nav">
+        <a href="admin-dashboard.html" class="nav-link">📊 Dashboard</a>
+        <a href="analytics.html" class="nav-link active">📈 Analytics</a>
+      </nav>
+
+      <!-- Analytics Content -->
+      <div class="analytics-content">
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+          <div class="card">
+            <h3>Total Consultations</h3>
+            <p class="big-number" id="total-consultations">0</p>
+            <small id="consultations-period">This Month</small>
+          </div>
+          <div class="card">
+            <h3>Average Wait Time</h3>
+            <p class="big-number" id="avg-wait-time">0 min</p>
+            <small>All Faculty</small>
+          </div>
+          <div class="card">
+            <h3>No-Show Rate</h3>
+            <p class="big-number" id="no-show-rate">0%</p>
+            <small>This Month</small>
+          </div>
+          <div class="card">
+            <h3>Faculty Active</h3>
+            <p class="big-number" id="faculty-count">0</p>
+            <small>With Consultations</small>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+          <!-- Consultations by Status -->
+          <div class="chart-container">
+            <h3>Consultations by Status</h3>
+            <canvas id="statusChart"></canvas>
+          </div>
+
+          <!-- Peak Hours -->
+          <div class="chart-container">
+            <h3>Peak Hours (Last 7 Days)</h3>
+            <canvas id="peakHoursChart"></canvas>
+          </div>
+
+          <!-- Faculty Comparison -->
+          <div class="chart-container full-width">
+            <h3>Faculty Performance</h3>
+            <canvas id="facultyChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Detailed Table -->
+        <div class="table-container">
+          <h3>Faculty Detailed Stats</h3>
+          <table class="analytics-table">
+            <thead>
+              <tr>
+                <th>Faculty Name</th>
+                <th>Total Consultations</th>
+                <th>Avg Wait Time</th>
+                <th>Completed Rate</th>
+                <th>No-Show Rate</th>
+              </tr>
+            </thead>
+            <tbody id="faculty-stats-tbody">
+              <tr><td colspan="5" class="loading">Loading data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../supabase/functions/supabase-client.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
