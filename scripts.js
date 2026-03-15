@@ -15,7 +15,16 @@ if (!window.supabase) {
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 initializeLanding();
-void restoreSessionAndRoute();
+
+// Only auto-redirect if not coming from kiosk mode
+const urlParams = new URLSearchParams(window.location.search);
+if (!urlParams.has('kiosk')) {
+  void restoreSessionAndRoute();
+} else {
+  // Clean up the URL by removing the kiosk parameter
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
 void loadFacultyStatusBoard();
 setInterval(() => {
   void loadFacultyStatusBoard();
