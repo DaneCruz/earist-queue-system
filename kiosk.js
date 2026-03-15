@@ -115,7 +115,7 @@ async function loginByStudentNumber(studentNumberInput) {
   );
 
   setStatus('Login successful. Redirecting...', 'success');
-  window.location.href = STUDENT_DASHBOARD_PATH;
+  window.location.href = STUDENT_DASHBOARD_PATH + '?from=kiosk';
 }
 
 function normalizeScannedStudentNumber(rawValue) {

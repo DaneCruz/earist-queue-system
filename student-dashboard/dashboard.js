@@ -1,4 +1,5 @@
 const STUDENT_SESSION_KEY = 'student_session';
+const FROM_KIOSK_KEY = 'student_from_kiosk';
 const LOGIN_PAGE_PATH = '../index.html';
 const SUPABASE_URL = 'https://yhryfoimpqzmaaymsaat.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_6AxrmJlwC7pTgRevGgjTtA_F5b2F8Eb';
@@ -31,6 +32,14 @@ const queueActionInFlight = new Set();
 
 if (!hasStudentSession()) {
   window.location.href = LOGIN_PAGE_PATH;
+}
+
+// Check if coming from kiosk mode
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('from') && urlParams.get('from') === 'kiosk') {
+  sessionStorage.setItem(FROM_KIOSK_KEY, 'true');
+  // Clean up URL
+  window.history.replaceState({}, document.title, window.location.pathname);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -132,7 +141,14 @@ function hasStudentSession() {
 
 async function logoutStudent() {
   sessionStorage.removeItem(STUDENT_SESSION_KEY);
-  window.location.href = LOGIN_PAGE_PATH;
+  const fromKiosk = sessionStorage.getItem(FROM_KIOSK_KEY) === 'true';
+  sessionStorage.removeItem(FROM_KIOSK_KEY);
+  
+  if (fromKiosk) {
+    window.location.href = LOGIN_PAGE_PATH + '?kiosk=true';
+  } else {
+    window.location.href = LOGIN_PAGE_PATH;
+  }
 }
 
 async function populateStudentHeader() {
