@@ -7,38 +7,23 @@
   <link rel="stylesheet" href="admin-dashboard.css">
   <link rel="stylesheet" href="analytics.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-      background-attachment: fixed;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <header class="navbar">
-      <div class="nav-content">
-        <h1>Queue Analytics</h1>
-        <button id="logout-btn" class="logout-btn">Logout</button>
-      </div>
-    </header>
+  <header class="analytics-navbar">
+    <div class="analytics-nav-content">
+      <h1 class="analytics-title">📈 Queue Analytics</h1>
+      <button id="logout-btn" class="btn danger">Logout</button>
+    </div>
+  </header>
+  <div class="analytics-body">
 
-    <main class="dashboard-container analytics-dashboard">
-      <!-- Navigation -->
-      <nav class="admin-nav">
-        <a href="admin-dashboard.html" class="nav-link">📊 Dashboard</a>
-        <a href="analytics.html" class="nav-link active">📈 Analytics</a>
-      </nav>
+    <nav class="analytics-sidebar">
+      <a href="admin-dashboard.html" class="nav-link">📊 Dashboard</a>
+      <a href="analytics.html" class="nav-link active">📈 Analytics</a>
+    </nav>
 
-      <!-- Analytics Content -->
-      <div class="analytics-content">
+    <main class="analytics-main">
         <!-- Summary Cards -->
         <div class="summary-cards">
           <div class="card">
@@ -102,7 +87,6 @@
             </tbody>
           </table>
         </div>
-      </div>
     </main>
   </div>
 
