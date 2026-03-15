@@ -132,9 +132,6 @@ function hasStudentSession() {
 
 async function logoutStudent() {
   sessionStorage.removeItem(STUDENT_SESSION_KEY);
-  if (supabaseClient) {
-    await supabaseClient.auth.signOut();
-  }
   window.location.href = LOGIN_PAGE_PATH;
 }
 
