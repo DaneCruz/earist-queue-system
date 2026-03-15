@@ -4,6 +4,13 @@ const SUPABASE_KEY = 'sb_publishable_6AxrmJlwC7pTgRevGgjTtA_F5b2F8Eb';
 // Initialize Supabase
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// Handle logout from other tabs
+const { data: authSubscription } = supabaseClient.auth.onAuthStateChange((event) => {
+  if (event === 'SIGNED_OUT') {
+    window.location.href = '../index.html';
+  }
+});
+
 // Chart instances
 let statusChart, peakHoursChart, facultyChart;
 
