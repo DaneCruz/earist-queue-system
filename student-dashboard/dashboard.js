@@ -29,15 +29,6 @@ let consultationRealtimeChannel = null;
 let facultyReloadTimer = null;
 const queueActionInFlight = new Set();
 
-// Handle logout from other tabs
-if (supabaseClient) {
-  const { data: authSubscription } = supabaseClient.auth.onAuthStateChange((event) => {
-    if (event === 'SIGNED_OUT') {
-      window.location.href = LOGIN_PAGE_PATH;
-    }
-  });
-}
-
 if (!hasStudentSession()) {
   window.location.href = LOGIN_PAGE_PATH;
 }

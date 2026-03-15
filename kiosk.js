@@ -12,13 +12,6 @@ if (!window.supabase) {
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Handle logout from other tabs
-const { data: authSubscription } = supabaseClient.auth.onAuthStateChange((event) => {
-  if (event === 'SIGNED_OUT') {
-    window.location.href = 'index.html';
-  }
-});
-
 initializeKiosk();
 
 function initializeKiosk() {
