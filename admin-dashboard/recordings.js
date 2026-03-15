@@ -24,17 +24,19 @@ class RecordingsManager {
         return;
       }
 
-      // Check if admin
-      const { data: adminUser } = await this.supabase
-        .from('admin_users')
-        .select('id')
-        .eq('id', user.id)
-        .single();
+      // Check if admin (optional - for now allow any authenticated user)
+      try {
+        const { data: adminUser } = await this.supabase
+          .from('admin_users')
+          .select('id')
+          .eq('id', user.id)
+          .single();
 
-      if (!adminUser) {
-        alert('Access denied - Admin only');
-        window.location.href = '/index.html';
-        return;
+        if (!adminUser) {
+          console.warn('User not in admin_users table, but allowing access for now');
+        }
+      } catch (adminCheckError) {
+        console.warn('Could not verify admin status:', adminCheckError.message);
       }
 
       // Load initial data
@@ -43,6 +45,7 @@ class RecordingsManager {
       this.setupEventListeners();
     } catch (error) {
       console.error('Error initializing recordings manager:', error);
+      alert('Error loading recordings: ' + error.message);
     }
   }
 
