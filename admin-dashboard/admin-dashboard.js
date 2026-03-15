@@ -31,7 +31,6 @@ if (!window.supabase) {
 }
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-let authStateSubscription = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('logout-btn')?.addEventListener('click', () => {
@@ -83,12 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   void enforceAdminSession();
-  const { data } = supabaseClient.auth.onAuthStateChange((event) => {
-    if (event === 'SIGNED_OUT') {
-      window.location.href = LOGIN_PAGE_PATH;
-    }
-  });
-  authStateSubscription = data?.subscription || null;
 });
 
 async function enforceAdminSession() {
@@ -592,10 +585,6 @@ async function deleteFaculty(id) {
 }
 
 async function logout() {
-  if (authStateSubscription) {
-    authStateSubscription.unsubscribe();
-    authStateSubscription = null;
-  }
   await supabaseClient.auth.signOut();
   window.location.href = LOGIN_PAGE_PATH;
 }

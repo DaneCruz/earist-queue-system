@@ -79,12 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   void enforceFacultySession();
-  const { data } = supabaseClient.auth.onAuthStateChange((event) => {
-    if (event === 'SIGNED_OUT') {
-      window.location.href = LOGIN_PAGE_PATH;
-    }
-  });
-  authStateSubscription = data?.subscription || null;
   window.addEventListener('beforeunload', cleanupRealtimeSubscriptions);
 });
 
