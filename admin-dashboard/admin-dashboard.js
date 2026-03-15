@@ -720,9 +720,6 @@ async function loadQueueOverview() {
   }
 
   if (query.error) {
-    setOverviewCounts(0, 0, 0);
-    renderFacultyLoadRows([]);
-    setAnalyticsValues('--', '0%', 'No data yet.');
     return;
   }
 
@@ -746,13 +743,6 @@ async function loadQueueOverview() {
     noShowRateLabel,
     topConcernsLabel,
   };
-
-  setOverviewCounts(waitingToday, interviewingNow, completedToday);
-  setAnalyticsValues(
-    avgWaitLabel,
-    noShowRateLabel,
-    topConcernsLabel
-  );
 
   const facultyMap = new Map();
   rows.forEach((row) => {
@@ -789,24 +779,6 @@ async function loadQueueOverview() {
       }
       return a.facultyName.localeCompare(b.facultyName);
     });
-
-  renderFacultyLoadRows(facultyRows);
-}
-
-function setAnalyticsValues(avgWaitLabel, noShowRateLabel, topConcernsLabel) {
-  const avgWaitEl = document.getElementById('avg-wait-today');
-  const noShowRateEl = document.getElementById('no-show-rate-today');
-  const topConcernsEl = document.getElementById('top-concerns-today');
-
-  if (avgWaitEl) {
-    avgWaitEl.textContent = avgWaitLabel;
-  }
-  if (noShowRateEl) {
-    noShowRateEl.textContent = noShowRateLabel;
-  }
-  if (topConcernsEl) {
-    topConcernsEl.textContent = topConcernsLabel;
-  }
 }
 
 function getAverageWaitLabel(rows) {
@@ -863,45 +835,6 @@ function getTopConcernsLabel(rows) {
     .slice(0, 3)
     .map(([concern, count]) => `${concern} (${count})`)
     .join(', ');
-}
-
-function setOverviewCounts(waiting, interviewing, completed) {
-  const waitingEl = document.getElementById('waiting-today-count');
-  const interviewingEl = document.getElementById('interviewing-count');
-  const completedEl = document.getElementById('completed-today-count');
-
-  if (waitingEl) {
-    waitingEl.textContent = String(waiting);
-  }
-  if (interviewingEl) {
-    interviewingEl.textContent = String(interviewing);
-  }
-  if (completedEl) {
-    completedEl.textContent = String(completed);
-  }
-}
-
-function renderFacultyLoadRows(rows) {
-  const body = document.getElementById('faculty-load-body');
-  if (!body) {
-    return;
-  }
-
-  if (!rows.length) {
-    body.innerHTML = '<tr><td colspan="4">No queue activity today.</td></tr>';
-    return;
-  }
-
-  body.innerHTML = rows
-    .map((item) => `
-      <tr>
-        <td>${escapeHtml(item.facultyName)}</td>
-        <td>${item.waiting}</td>
-        <td>${item.interviewing}</td>
-        <td>${item.totalActive}</td>
-      </tr>
-    `)
-    .join('');
 }
 
 async function loadActivityLogs() {
