@@ -3,6 +3,12 @@ const FROM_KIOSK_KEY = 'student_from_kiosk';
 const LOGIN_PAGE_PATH = '../index.html';
 const SUPABASE_URL = 'https://yhryfoimpqzmaaymsaat.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_6AxrmJlwC7pTgRevGgjTtA_F5b2F8Eb';
+
+// ============ CALL SYSTEM STATE ============
+let consultationCallManager;
+let currentConsultationId = null;
+let facultyPeerId = null;
+// ==========================================
 const FACULTY_TABLE = 'faculty';
 const CONSULTATIONS_TABLE = 'consultations';
 const QUEUE_EMAIL_FUNCTION = 'send-queue-email';
@@ -42,7 +48,69 @@ if (urlParams.has('from') && urlParams.get('from') === 'kiosk') {
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
+// ============ CALL SYSTEM INITIALIZATION ============
+async function initializeCallSystem() {
+  try {
+    if (!supabaseClient) {
+      console.warn('Supabase client not available for call system');
+      return;
+    }
+    consultationCallManager = new ConsultationCallManager(supabaseClient);
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (user) {
+      await consultationCallManager.initialize(user.id, 'student');
+      console.log('✅ Call system ready for student');
+    }
+  } catch (error) {
+    console.error('❌ Call system initialization error:', error);
+  }
+}
+
+async function startStudentCall() {
+  try {
+    if (!consultationCallManager) {
+      alert('Call system not initialized. Please refresh the page.');
+      return;
+    }
+
+    // Get consultation ID from a div or element if available
+    const consultationId = currentConsultationId || document.getElementById('consultationId')?.value;
+    const facultyId = facultyPeerId || document.getElementById('facultyId')?.value;
+
+    if (!consultationId || !facultyId) {
+      alert('Please select a consultation first or wait for automatic connection.');
+      return;
+    }
+
+    console.log('Starting call with consultation:', consultationId);
+    const success = await consultationCallManager.startCall(
+      consultationId,
+      facultyId,
+      false // Student receives offer
+    );
+
+    if (success) {
+      console.log('✅ Call started successfully');
+    } else {
+      alert('❌ Failed to start call. Check your microphone permissions.');
+    }
+  } catch (error) {
+    console.error('Call error:', error);
+    alert('Error starting call: ' + error.message);
+  }
+}
+
+// Clean up on leave
+window.addEventListener('beforeunload', () => {
+  if (consultationCallManager?.isCallActive()) {
+    consultationCallManager.endCall();
+  }
+});
+// =====================================
+
 document.addEventListener('DOMContentLoaded', () => {
+  initializeCallSystem();
+  
   const logoutButton = document.getElementById('logout-btn');
   const refreshEtaButton = document.getElementById('refresh-eta-btn');
   if (logoutButton) {
