@@ -72,7 +72,11 @@ class CallManager {
 
         // Auto-start recording when both streams are connected
         if (this.localStream && this.remoteStream && !this.isRecording) {
+          console.log('✅ AUTOMATIC RECORDING: Both streams connected! Starting recording now...');
+          console.log('Local tracks:', this.localStream.getTracks().map(t => t.kind));
+          console.log('Remote tracks:', this.remoteStream.getTracks().map(t => t.kind));
           setTimeout(() => {
+            console.log('Starting MediaRecorder...');
             this.startRecording();
           }, 500);
         }
@@ -149,10 +153,16 @@ class CallManager {
 
   startRecording() {
     if (this.isRecording || !this.localStream || !this.remoteStream) {
+      console.log('⚠️ Recording already active or streams missing:', { 
+        isRecording: this.isRecording, 
+        hasLocal: !!this.localStream, 
+        hasRemote: !!this.remoteStream 
+      });
       return;
     }
 
     try {
+      console.log('🎙️ Creating MediaRecorder...');
       // Combine both streams for recording
       const audioContext = new AudioContext();
       const localAudio = audioContext.createMediaStreamSource(this.localStream);
@@ -185,9 +195,9 @@ class CallManager {
 
       this.mediaRecorder.start();
       this.isRecording = true;
-      console.log('Recording started');
+      console.log('🔴 RECORDING ACTIVE - Voice recording started!');
     } catch (error) {
-      console.error('Error starting recording:', error);
+      console.error('❌ Error starting recording:', error);
       if (this.callbacks.onError) {
         this.callbacks.onError(error);
       }

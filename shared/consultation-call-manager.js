@@ -29,7 +29,21 @@ class ConsultationCallManager {
 
     await this.signalingService.initialize(userId, userType);
 
+    // For students, set up auto-listening for incoming calls
+    if (userType === 'student') {
+      this.setupStudentListening();
+    }
+
     this.setupCallManagerCallbacks();
+  }
+
+  /**
+   * Setup continuous listening for incoming calls (students only)
+   */
+  setupStudentListening() {
+    console.log('🎤 Student listening for incoming calls...');
+    // Create a dummy consultation ID listener that will capture any incoming signals
+    // This is handled in startCall() when an offer arrives
   }
 
   /**
@@ -127,6 +141,13 @@ class ConsultationCallManager {
   handleCallInitiated(from) {
     console.log('Call initiated by:', from);
     this.callInterface.setStatus('Incoming call...');
+    
+    // AUTO-JOIN for students: Automatically accept the incoming call
+    if (this.userType === 'student' && !this.isCallActive) {
+      console.log('🎤 Auto-joining incoming call from faculty...');
+      this.callInterface.show();
+      // The offer will be handled automatically by handleOffer
+    }
   }
 
   /**
@@ -209,20 +230,21 @@ class ConsultationCallManager {
     });
 
     this.callManager.setCallback('onRecordingReady', async (blob) => {
-      console.log('Recording ready, saving...');
+      console.log('✅ Recording finished! Size:', blob.size, 'bytes');
       try {
         const duration = this.callStartTime ? Math.floor((Date.now() - this.callStartTime) / 1000) : 0;
+        console.log('📤 Uploading recording to Supabase Storage... Duration:', duration, 'seconds');
         const result = await this.recordingService.saveRecording(
           this.currentConsultationId,
           blob,
           { duration }
         );
-        console.log('Recording saved:', result);
+        console.log('✅✅ Recording saved successfully:', result);
 
         // Update consultation with recording
         await this.updateConsultationRecording(result.fileName);
       } catch (error) {
-        console.error('Error saving recording:', error);
+        console.error('❌ Error saving recording:', error);
       }
     });
 
