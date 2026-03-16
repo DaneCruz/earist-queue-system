@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Faculty Dashboard</title>
   <link rel="stylesheet" href="faculty-dashboard.css">
+  <link rel="stylesheet" href="../shared/call-interface.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 
@@ -23,12 +24,32 @@
           <option value="busy">Busy</option>
           <option value="offline">Offline</option>
         </select>
+        <button id="callStudentBtn" type="button" class="call-btn" onclick="callStudent()">🎙️ Call & Record</button>
         <button id="next-student-btn" type="button" class="primary-btn">Next Student</button>
         <button id="refresh-queue-btn" type="button" class="neutral-btn">Refresh</button>
         <button id="faculty-logout-btn" type="button">Logout</button>
       </div>
 
       <style>
+        .call-btn {
+          padding: 10px 16px;
+          background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+          color: white;
+          border: none;
+          border-radius: 6px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          white-space: nowrap;
+        }
+        .call-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+        .call-btn:active {
+          transform: translateY(0);
+        }
       </style>
     </header>
 
@@ -59,6 +80,13 @@
       <div id="queue-list" class="queue-list"></div>
     </section>
   </main>
+
+  <!-- Call System Scripts -->
+  <script src="../shared/call-manager.js"></script>
+  <script src="../shared/call-interface.js"></script>
+  <script src="../shared/call-signaling.js"></script>
+  <script src="../shared/recording-storage.js"></script>
+  <script src="../shared/consultation-call-manager.js"></script>
 
   <script src="faculty-dashboard.js"></script>
 </body>

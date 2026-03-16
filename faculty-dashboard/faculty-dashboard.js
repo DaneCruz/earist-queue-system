@@ -29,11 +29,80 @@ let statusEmailJobRunning = false;
 const statusActionInFlight = new Set();
 let authStateSubscription = null;
 
+// ============ CALL SYSTEM STATE ============
+let consultationCallManager;
+let currentConsultationId = null;
+let studentPeerId = null;
+// ==========================================
+
+// ============ CALL SYSTEM INITIALIZATION ============
+async function initializeFacultyCallSystem() {
+  try {
+    if (!supabaseClient) {
+      console.warn('Supabase client not available for call system');
+      return;
+    }
+    consultationCallManager = new ConsultationCallManager(supabaseClient);
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (user) {
+      await consultationCallManager.initialize(user.id, 'faculty');
+      console.log('✅ Call system ready for faculty');
+    }
+  } catch (error) {
+    console.error('❌ Call system initialization error:', error);
+  }
+}
+
+async function callStudent() {
+  try {
+    if (!consultationCallManager) {
+      alert('Call system not initialized. Please refresh the page.');
+      return;
+    }
+
+    // Get student ID from a div or element if available
+    const consultationId = currentConsultationId || document.getElementById('consultationId')?.value;
+    const studentId = studentPeerId || document.getElementById('studentId')?.value;
+
+    if (!consultationId || !studentId) {
+      alert('Please select a student consultation first or wait for automatic connection.');
+      return;
+    }
+
+    console.log('Initiating call to student:', studentId);
+    
+    const success = await consultationCallManager.startCall(
+      consultationId,
+      studentId,
+      true // Faculty initiates (creates offer)
+    );
+
+    if (success) {
+      console.log('✅ Call initiated successfully');
+    } else {
+      alert('❌ Failed to initiate call');
+    }
+  } catch (error) {
+    console.error('Call error:', error);
+    alert('Error initiating call: ' + error.message);
+  }
+}
+
+// Clean up on leave
+window.addEventListener('beforeunload', () => {
+  if (consultationCallManager?.isCallActive()) {
+    consultationCallManager.endCall();
+  }
+});
+// =====================================
+
 document.addEventListener('DOMContentLoaded', () => {
   if (!supabaseClient) {
     setStatus('Supabase SDK failed to load. Refresh the page and try again.', 'error');
     return;
   }
+
+  initializeFacultyCallSystem();
 
   const logoutButton = document.getElementById('faculty-logout-btn');
   const refreshButton = document.getElementById('refresh-queue-btn');
@@ -338,6 +407,13 @@ function renderQueue(items, studentMap) {
       </div>
     `;
     container.appendChild(card);
+  
+    // Automatically set current consultation if there's an active interview
+    if (status === 'interviewing') {
+      currentConsultationId = String(item.id);
+      studentPeerId = item.student_number;
+      console.log('Auto-set interview:', { consultationId: currentConsultationId, student: studentPeerId });
+    }
 });
 
 container.querySelectorAll('.action-btn').forEach((button) => {

@@ -30,6 +30,11 @@ let consultationRealtimeChannel = null;
 let facultyReloadTimer = null;
 const queueActionInFlight = new Set();
 
+// Call System Variables
+let callManager = null;
+let currentConsultationId = null;
+let facultyPeerId = null;
+
 if (!hasStudentSession()) {
   window.location.href = LOGIN_PAGE_PATH;
 }
@@ -75,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
   void populateStudentHeader();
   void loadFacultyCards();
   startRealtimeSubscriptions();
+  initializeStudentCallSystem();
 
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
@@ -1381,4 +1387,92 @@ async function cancelMyQueue(consultationId, buttonEl) {
     restoreButton();
     queueActionInFlight.delete(key);
   }
+}
+
+// Call System Functions for Student
+function initializeStudentCallSystem() {
+  console.log('📞 Initializing student call system...');
+  callManager = new CallManager();
+  
+  // Listen for incoming call offers from faculty
+  if (supabaseClient) {
+    const studentNumber = getStudentNumber();
+    const callChannel = supabaseClient.channel(`call-${studentNumber}`)
+      .on('broadcast', { event: 'call-offer' }, (payload) => {
+        console.log('📨 Incoming call offer from faculty:', payload);
+        window.incomingOffer = payload.payload;
+        showIncomingCallModal(payload.payload);
+      })
+      .subscribe();
+  }
+  
+  window.addEventListener('beforeunload', () => {
+    if (callManager) {
+      callManager.endCall();
+    }
+  });
+}
+
+function showIncomingCallModal(offer) {
+  const facultyName = offer.facultyName || 'Faculty';
+  console.log('🔔 Showing incoming call modal from', facultyName);
+  
+  // Create and show modal for incoming call
+  const modal = document.createElement('div');
+  modal.className = 'incoming-call-modal';
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  `;
+  
+  modal.innerHTML = `
+    <div style="background: white; padding: 30px; border-radius: 10px; text-align: center; min-width: 300px;">
+      <h2>Incoming Call</h2>
+      <p>${facultyName} is calling...</p>
+      <div style="margin-top: 20px;">
+        <button onclick="acceptCallFromModal(${offer.consultationId})" style="padding: 10px 20px; margin-right: 10px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer;">Accept</button>
+        <button onclick="rejectCall()" style="padding: 10px 20px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer;">Decline</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+}
+
+function acceptCallFromModal(consultationId) {
+  removeIncomingCallModal();
+  acceptCall(consultationId, 'Faculty');
+}
+
+function rejectCall() {
+  removeIncomingCallModal();
+  console.log('❌ Student declined the call');
+}
+
+function removeIncomingCallModal() {
+  const modal = document.querySelector('.incoming-call-modal');
+  if (modal) {
+    modal.remove();
+  }
+}
+
+function getStudentNumber() {
+  const session = sessionStorage.getItem(STUDENT_SESSION_KEY);
+  if (session) {
+    try {
+      const parsed = JSON.parse(session);
+      return parsed.student_number || '';
+    } catch {
+      return '';
+    }
+  }
+  return '';
 }
