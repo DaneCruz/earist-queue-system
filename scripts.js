@@ -13,6 +13,7 @@ if (!window.supabase) {
 }
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+window.supabaseClient = supabaseClient; // Make it globally available
 
 initializeLanding();
 
