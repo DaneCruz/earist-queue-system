@@ -89,8 +89,7 @@ class RecordingsManager {
           consultations!inner (
             id,
             faculty_id,
-            student_id,
-            slot_time
+            student_number
           )
         `)
         .order('recorded_at', { ascending: false });
@@ -101,20 +100,20 @@ class RecordingsManager {
       this.allRecordings = await Promise.all((recordings || []).map(async (r) => {
         const faculty = this.facultyList.find(f => f.id === r.consultations.faculty_id);
         
-        // Get student name
-        let studentName = r.consultations.student_id;
+        // Get student name from student_number
+        let studentName = r.consultations.student_number;
         try {
           const { data: student } = await this.supabase
             .from('students')
-            .select('name')
-            .eq('id', r.consultations.student_id)
+            .select('full_name')
+            .eq('student_number', r.consultations.student_number)
             .single();
           
-          if (student) {
-            studentName = student.name;
+          if (student?.full_name) {
+            studentName = student.full_name;
           }
         } catch (e) {
-          console.log('Could not fetch student name');
+          console.log('Could not fetch student name for', r.consultations.student_number);
         }
 
         return {
