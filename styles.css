@@ -10,7 +10,7 @@ body {
   justify-content: center;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
   background-attachment: fixed;
   position: relative;
   overflow: hidden;
@@ -140,16 +140,16 @@ h1 {
 }
 
 .btn:focus-visible {
-  outline: 3px solid rgba(102, 126, 234, 0.5);
+  outline: 3px solid rgba(37, 99, 235, 0.5);
   outline-offset: 2px;
 }
 
 .quick-login {
   margin: 0;
   padding: 24px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(240, 147, 251, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
   border-radius: 16px;
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
 }
 
 .quick-login h2 {
@@ -173,17 +173,17 @@ input[type="email"] {
 
 input[type="email"]:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #2563eb;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .faculty-status-board {
   margin: 0;
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 16px;
   padding: 20px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(240, 147, 251, 0.03) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
 }
 
 .faculty-status-board h2 {
@@ -211,7 +211,7 @@ input[type="email"]:focus {
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 12px;
   background: #fff;
   min-width: 0;
@@ -219,8 +219,8 @@ input[type="email"]:focus {
 }
 
 .faculty-status-item:hover {
-  background: rgba(102, 126, 234, 0.05);
-  border-color: rgba(102, 126, 234, 0.2);
+  background: rgba(37, 99, 235, 0.05);
+  border-color: rgba(37, 99, 235, 0.2);
 }
 
 .faculty-status-name {

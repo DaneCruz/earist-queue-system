@@ -6,7 +6,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
   background-attachment: fixed;
   color: #1d2a3b;
   position: relative;
@@ -96,8 +96,8 @@ h2 {
 }
 
 .btn.neutral {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
 .btn.danger {
@@ -119,7 +119,7 @@ h2 {
   transform: translateY(0);
 }
 
-.btn  outline: 3px solid rgba(102, 126, 234, 0.5);
+.btn  outline: 3px solid rgba(37, 99, 235, 0.5);
   outline-offset: 2px;
 }
 
@@ -198,16 +198,16 @@ h2 {
 }
 
 .overview-card {
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 12px;
   padding: 18px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(240, 147, 251, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
   transition: all 0.2s ease;
 }
 
 .overview-card:hover {
-  border-color: rgba(102, 126, 234, 0.2);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
 }
 
 .overview-label {
@@ -293,9 +293,9 @@ select {
 input:focus,
 select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #2563eb;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .table-wrap {
@@ -305,7 +305,7 @@ select:focus {
   flex: 1;
   min-height: 280px;
   max-height: 480px;
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.8);
 }
@@ -320,7 +320,7 @@ table {
 thead {
   position: sticky;
   top: 0;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(240, 147, 251, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
   z-index: 10;
 }
 
@@ -332,11 +332,11 @@ th {
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+  border-bottom: 2px solid rgba(37, 99, 235, 0.2);
 }
 
 td {
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.1);
   padding: 12px 14px;
   text-align: left;
   overflow-wrap: anywhere;
@@ -346,7 +346,7 @@ td {
 }
 
 tbody tr:hover {
-  background: rgba(102, 126, 234, 0.03);
+  background: rgba(37, 99, 235, 0.03);
 }
 
 .activity-target-type {
@@ -357,13 +357,13 @@ tbody tr:hover {
 .activity-target-id {
   display: inline-block;
   margin-top: 4px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(240, 147, 251, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
   color: #0d47a1;
   border-radius: 6px;
   padding: 4px 8px;
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(37, 99, 235, 0.2);
 }
 
 .activity-details {
@@ -770,7 +770,7 @@ td.actions {
   button:focus-visible,
   select:focus-visible,
   input:focus-visible {
-    outline: 2px solid #667eea;
+    outline: 2px solid #2563eb;
     outline-offset: 2px;
   }
 }

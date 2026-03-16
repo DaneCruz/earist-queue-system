@@ -6,7 +6,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #f093fb 100%);
   background-attachment: fixed;
   color: #1d2530;
   position: relative;
@@ -95,9 +95,9 @@ body::after {
 
 .availability-select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #2563eb;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 #faculty-logout-btn {
@@ -124,20 +124,20 @@ body::after {
   border: none;
   border-radius: 8px;
   padding: 10px 18px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
   color: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 700;
   font-size: 13px;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
 
 .neutral-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
 }
 
 .primary-btn {
@@ -181,11 +181,11 @@ body::after {
 }
 
 .availability-window-card {
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 24px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(240, 147, 251, 0.03) 100%);
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
 }
 
 .availability-window-card h2 {
@@ -226,9 +226,9 @@ body::after {
 
 .availability-window-grid input[type="time"]:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #2563eb;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .queue-toolbar {
@@ -259,9 +259,9 @@ body::after {
 
 .history-filter:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #2563eb;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .status-text {
@@ -309,7 +309,7 @@ body::after {
 }
 
 .queue-item {
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 12px;
   padding: 18px;
   width: 100%;
@@ -319,8 +319,8 @@ body::after {
 }
 
 .queue-item:hover {
-  border-color: rgba(102, 126, 234, 0.2);
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.1);
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.1);
 }
 
 .queue-item h3 {
@@ -401,7 +401,7 @@ body::after {
   font-weight: 700;
   font-size: 14px;
   padding: 8px;
-  background: rgba(102, 126, 234, 0.08);
+  background: rgba(37, 99, 235, 0.08);
   border-radius: 6px;
 }
 
@@ -748,7 +748,7 @@ body::after {
   button:focus-visible,
   select:focus-visible,
   input:focus-visible {
-    outline: 2px solid #667eea;
+    outline: 2px solid #2563eb;
     outline-offset: 2px;
   }
 }
