@@ -42,59 +42,12 @@
     <div id="notifications-container" class="notifications-container"></div>
 
     <div class="my-queue-panel">
-      <div class="queue-header-with-call">
-        <h2>My Queue Today</h2>
-        <button id="startCallBtn" class="call-btn" onclick="startStudentCall()" title="Start consultation call with recording">
-          🎙️ Start Recording Call
-        </button>
-      </div>
+      <h2>My Queue Today</h2>
       <p id="queue-live-banner" class="queue-live-banner" hidden></p>
       <div id="my-queue-list" class="my-queue-list">
         <p class="muted-text">Loading your queue...</p>
       </div>
     </div>
-
-    <style>
-      .queue-header-with-call {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-      }
-      .queue-header-with-call h2 {
-        margin: 0;
-      }
-      .call-btn {
-        padding: 10px 16px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-      }
-      .call-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-      }
-      .call-btn:active {
-        transform: translateY(0);
-      }
-      @media (max-width: 768px) {
-        .queue-header-with-call {
-          flex-direction: column;
-          gap: 10px;
-          align-items: flex-start;
-        }
-        .call-btn {
-          width: 100%;
-          text-align: center;
-        }
-      }
-    </style>
 
     <div class="faculty-availability">
       <div class="section-head">
