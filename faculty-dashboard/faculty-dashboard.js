@@ -406,9 +406,16 @@ function renderQueue(items, studentMap) {
       </div>
     `;
     container.appendChild(card);
-  });
+  
+  // Automatically set current consultation if there's an active interview
+  if (status === 'interviewing') {
+    currentConsultationId = String(item.id);
+    studentPeerId = item.student_number;
+    console.log('Auto-set interview:', { consultationId: currentConsultationId, student: studentPeerId });
+  }
+});
 
-  container.querySelectorAll('.action-btn').forEach((button) => {
+container.querySelectorAll('.action-btn').forEach((button) => {
     button.addEventListener('click', async (event) => {
       const target = event.currentTarget;
       const id = target.getAttribute('data-id');
